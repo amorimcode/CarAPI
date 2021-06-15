@@ -12,12 +12,12 @@ class Connection {
             useFindAndModify: false,
             useCreateIndex: true
         })
-        .then(() => {
-            console.log("Success MongoDB connection.")
-        })
-        .catch((error) => {
-            console.log(`Error MongoDB connection: ${error}`)
-        })
+            .then(() => {
+                console.log("Sucesso ao conectar no MongoDB")
+            })
+            .catch((error) => {
+                console.log(`Erro ao conectar no mongoDB: ${error}`)
+            })
     }
 }
 

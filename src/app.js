@@ -11,7 +11,7 @@ class App {
         this.routes();
     }
 
-    middlewares(){
+    middlewares() {
         this.app.use(express.json());
         this.app.use(morgan('dev'))
         this.app.use((req, res, next) => {
@@ -23,7 +23,7 @@ class App {
             next();
         })
     }
-    
+
     routes() {
         this.app.use(routes);
     }
