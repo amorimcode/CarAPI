@@ -17,7 +17,8 @@
     "mongoose": "^5.12.13",
     "morgan": "^1.10.0",
     "node": "^16.1.0",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.10",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

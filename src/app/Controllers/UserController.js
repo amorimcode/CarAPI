@@ -1,5 +1,5 @@
-
 const User = require('../Models/User');
+const bcrypt = require('bcryptjs');
 
 class UserController {
 
@@ -18,6 +18,8 @@ class UserController {
         const { name, email, password } = req.body;
 
         const data = { name, email, password }
+
+        data.password = await bcrypt.hash(data.password, 8);
 
         await User.create(data, (err) => {
             if (err) return res.status(400).json({
