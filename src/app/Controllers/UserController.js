@@ -1,5 +1,6 @@
 const User = require('../Models/User');
 const bcrypt = require('bcryptjs');
+const yup = require('yup')
 
 class UserController {
 
@@ -13,9 +14,35 @@ class UserController {
 
     async store(req, res) {
 
-        // Validação
+        /* Validação através do YUP schema
+        Início */
 
+        let schema = yup.object().shape({
+            name: yup.string().required(),
+            email: yup.string().email().required(),
+            password: yup.string().required()
+          });
+
+        if (!(await schema.isValid(req.body))) {
+            return res.status(400).json({
+                error: true,
+                message: "Dados inválidos!"
+            })
+        }
+
+        /* Validação através do YUP schema
+        Fim */
+
+       let userExist = await User.findOne({ email: req.body.email })
+        if (userExist) {
+            return res.status(400).json({
+                error: true,
+                message: "Email já cadastrado"
+            })
+        }
+        // Desestruturação dos dados da req
         const { name, email, password } = req.body;
+
 
         const data = { name, email, password }
 
