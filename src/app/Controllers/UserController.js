@@ -33,6 +33,7 @@ class UserController {
         /* Validação através do YUP schema
         Fim */
 
+        // Verifica se email já existe
        let userExist = await User.findOne({ email: req.body.email })
         if (userExist) {
             return res.status(400).json({
@@ -40,6 +41,7 @@ class UserController {
                 message: "Email já cadastrado"
             })
         }
+
         // Desestruturação dos dados da req
         const { name, email, password } = req.body;
 
