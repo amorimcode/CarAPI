@@ -4,8 +4,8 @@ const yup = require('yup')
 
 class UserController {
 
-    show(req, res) {
-        var users = ["Bruno", "Kamila", "Lillian"]
+    async show(req, res) {
+        var users = await User.find().select('-password')
         return res.status(200).json({
             error: false,
             users
@@ -44,7 +44,6 @@ class UserController {
 
         // Desestruturação dos dados da req
         const { name, email, password } = req.body;
-
 
         const data = { name, email, password }
 
