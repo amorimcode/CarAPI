@@ -14,6 +14,7 @@ routes.post("/login", LoginController.index);
 routes.post("/car", AuthMiddleware, CarController.add)
 routes.get("/car", AuthMiddleware, CarController.findAll)
 routes.delete("/car/:id", AuthMiddleware, CarController.delete)
+routes.patch("/car/:id", AuthMiddleware, CarController.update)
 
 
 module.exports = routes;

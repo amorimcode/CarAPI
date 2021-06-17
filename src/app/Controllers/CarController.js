@@ -46,18 +46,76 @@ class CarController {
         return res.send({ car })
     }
 
-    // falta mandar mensagem de erro quando não encontrado 
     async delete(req, res) {
         const { id } = req.params;
         try {
-            const carDelete = await Car.findByIdAndDelete(id)
-            return res.status(204).send({ message: 'oi'})
+            const car = await Car.findById(id)
+            console.log(car)
+            if (!car) {
+                return res.status(422).json({
+                    error: true,
+                    message: 'Carro não encontrado ou inválido'
+                })
+            }
+            await car.delete()
+            return res.status(204).send()
         } catch (err) {
-            return res.status(400).json({
+            return res.status(422).json({
                 error: true,
                 message: "Carro não encontrado ou inválido"
             })
         }
+    }
+
+    async update(req, res) {
+        const { id } = req.params;
+        const { name, brand, model, year, fuel, color, price } = req.body;
+
+        const idExist = await Car.findById(id)
+
+        if (!idExist) {
+            return res.status(412).json({
+                error: true,
+                message: "Carro não encontrado"
+            })
+        }
+
+        const carExist = await Car.findOne({ name })
+
+        if (carExist) {
+            return res.status(412).json({
+                error: true,
+                message: "Já existe um carro cadastrado com esse nome"
+            })
+        }
+
+        let carSchema = yup.object().shape({
+            name: yup.string().min(3, 'Mínimo de 3 caracteres.'),
+            brand: yup.string().min(3, 'Mínimo de 3 caracteres.'),
+            model: yup.string().min(3, 'Mínimo de 3 caracteres.'),
+            year: yup.string().min(4, 'O ano deve ter 4 caracteres.').max(4, 'O ano deve ter 4 caracteres.'),
+            fuel: yup.string().min(3, 'Mínimo de 3 caracteres.'),
+            color: yup.string().min(3, 'Mínimo de 3 caracteres.'),
+            price: yup.number()
+        });
+
+        if (!(await carSchema.isValid(req.body))) {
+            return res.status(400).json({
+                error: true,
+                message: "Dados inválidos!"
+            })
+        }
+
+        const data = { name, brand, model, year, fuel, color, price }
+        const options = { new: true}
+        try {
+            const car = await Car.findByIdAndUpdate(id, data, options)
+            return res.status(200).send({ car })
+        } catch (err) {
+            return res.status(400).send({ message: err.message })
+        }
+
+
     }
 }
 
