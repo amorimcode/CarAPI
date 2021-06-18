@@ -4,14 +4,6 @@ const yup = require('yup')
 class CarController {
     async add(req, res) {
         const { name, brand, model, year, fuel, color, price } = req.body;
-        const carExist = await Car.findOne({ name });
-
-        if (carExist) {
-            return res.status(412).json({
-                error: true,
-                message: 'Carro já cadastrado.'
-            })
-        }
 
         let carSchema = yup.object().shape({
             name: yup.string().required().min(3, 'Mínimo de 3 caracteres.'),
@@ -96,15 +88,6 @@ class CarController {
             return res.status(412).json({
                 error: true,
                 message: "Carro não encontrado"
-            })
-        }
-
-        const carExist = await Car.findOne({ name })
-
-        if (carExist) {
-            return res.status(412).json({
-                error: true,
-                message: "Já existe um carro cadastrado com esse nome"
             })
         }
 
