@@ -41,16 +41,10 @@ class CarController {
         }
     }
 
-    async findAll(req, res) {
-        const car = await Car.find();
-        return res.send({ car })
-    }
-
     async delete(req, res) {
         const { id } = req.params;
         try {
             const car = await Car.findById(id)
-            console.log(car)
             if (!car) {
                 return res.status(422).json({
                     error: true,
@@ -65,6 +59,31 @@ class CarController {
                 message: "Carro não encontrado ou inválido"
             })
         }
+    }
+
+    async findAll(req, res) {
+        const car = await Car.find();
+        return res.send({ car })
+    }
+
+    async findById(req, res) {
+        const { id } = req.params;
+        try {
+            const car = await Car.findById(id)
+            if (!car) {
+                return res.status(400).json({
+                    error: true,
+                    message: 'Carro não encontrado'
+                })
+            }
+            return res.status(200).send({car})
+        } catch (err) {
+            return res.status(400).json({
+                error: true,
+                message: "Carro não encontrado"
+            })
+        } 
+
     }
 
     async update(req, res) {
@@ -117,6 +136,7 @@ class CarController {
 
 
     }
+
 }
 
 module.exports = new CarController();

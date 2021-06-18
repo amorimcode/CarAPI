@@ -27,8 +27,5 @@ class App {
     routes() {
         this.app.use(routes);
     }
-
-
 }
-
 module.exports = new App().app
