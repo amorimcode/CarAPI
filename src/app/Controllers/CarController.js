@@ -106,10 +106,10 @@ class CarController {
             })
         }
 
-        const data = { name, brand, model, year, fuel, color, price }
-        const options = { new: true}
+        const updates = req.body
+        const options = { new: true }
         try {
-            const car = await Car.findByIdAndUpdate(id, data, options)
+            const car = await Car.findByIdAndUpdate(id, updates, options)
             return res.status(200).send({ car })
         } catch (err) {
             return res.status(400).send({ message: err.message })
