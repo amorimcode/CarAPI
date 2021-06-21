@@ -10,14 +10,14 @@ class LoginController {
 
     const userExist = await User.findOne({ email });
 
-    if(!userExist){
+    if (!userExist) {
       return res.status(400).json({
         error: true,
         message: "Usuário não existe!"
       })
     }
 
-    if(!(await bcrypt.compare(password, userExist.password))) {
+    if (!(await bcrypt.compare(password, userExist.password))) {
       return res.status(400).json({
         error: true,
         message: "Senha inválida"
@@ -30,9 +30,9 @@ class LoginController {
         email: userExist.email
       },
       token: jwt.sign(
-        {id: userExist._id}, 
-        config.secret, 
-        {expiresIn: config.expireIn} 
+        { id: userExist._id },
+        config.secret,
+        { expiresIn: config.expireIn }
       )
     })
   }

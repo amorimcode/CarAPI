@@ -68,14 +68,13 @@ class CarController {
                     message: 'Carro não encontrado'
                 })
             }
-            return res.status(200).send({car})
+            return res.status(200).send({ car })
         } catch (err) {
             return res.status(400).json({
                 error: true,
                 message: "Carro não encontrado"
             })
-        } 
-
+        }
     }
 
     async update(req, res) {
@@ -116,10 +115,7 @@ class CarController {
         } catch (err) {
             return res.status(400).send({ message: err.message })
         }
-
-
     }
-
 }
 
 module.exports = new CarController();

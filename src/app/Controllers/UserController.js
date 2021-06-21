@@ -21,7 +21,7 @@ class UserController {
             name: yup.string().required(),
             email: yup.string().email().required(),
             password: yup.string().required()
-          });
+        });
 
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({
@@ -34,7 +34,7 @@ class UserController {
         Fim */
 
         // Verifica se email já existe
-       let userExist = await User.findOne({ email: req.body.email })
+        let userExist = await User.findOne({ email: req.body.email })
         if (userExist) {
             return res.status(400).json({
                 error: true,
