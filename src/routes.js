@@ -17,5 +17,4 @@ routes.get("/car/:id", AuthMiddleware, CarController.findById)
 routes.delete("/car/:id", AuthMiddleware, CarController.delete)
 routes.patch("/car/:id", AuthMiddleware, CarController.update)
 
-
 module.exports = routes;
